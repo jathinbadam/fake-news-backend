@@ -233,3 +233,6 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
             category[0] = float(trained_model.predict(test_vector)[0])
 
     return category
+
+if __name__ == '__main__':
+    app.run(debug=True)
