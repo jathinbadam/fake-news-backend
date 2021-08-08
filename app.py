@@ -94,7 +94,7 @@ def predict():
 @cross_origin(supports_credentials=True)
 @app.route('/add/', methods=['GET','POST'])
 def add():
-
+    
     if request.method == "POST":
         request_data = request.get_json()
 
@@ -103,18 +103,19 @@ def add():
 
         text_data = None
         link_data = None
+        if 'text' in request_data:
+            text_data = request_data['text']
+        if 'link' in request_data:
+            link_data = request_data['link']
 
-        if 'Text' in request_data:
-            text_data = request_data['Text']
-        if 'Link' in request_data:
-            link_data = request_data['Link']
-
-        if data_entry_method == 'Text':
+        if data_entry_method == 'text':
            print(text_data)
            print(article_category)
         else:
             print(link_data)
             print(article_category)
+
+    return "Added Successfully to the database"
 
 def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_learning_method):
 
@@ -232,6 +233,3 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
             category[0] = float(trained_model.predict(test_vector)[0])
 
     return category
-
-if __name__ == '__main__':
-    app.run(host="localhost", port=5050, debug=True)
