@@ -19,11 +19,10 @@ CORS(app, support_credentials=True)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/')
 @cross_origin(supports_credentials=True)
-
+@app.route('/')
 def home():
-    return render_template('home.html')
+    return "Hello"
 
 def documentvec(word2vec_model,summarywords):
     "This function Creates a document vector by taking the mean of word vectors of the words in the document"
