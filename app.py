@@ -19,10 +19,11 @@ CORS(app, support_credentials=True)
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@cross_origin(supports_credentials=True)
 @app.route('/')
+@cross_origin(supports_credentials=True)
+
 def home():
-    return "Hello"
+    return render_template('home.html')
 
 def documentvec(word2vec_model,summarywords):
     "This function Creates a document vector by taking the mean of word vectors of the words in the document"
@@ -93,7 +94,7 @@ def predict():
 @cross_origin(supports_credentials=True)
 @app.route('/add/', methods=['GET','POST'])
 def add():
-    
+
     if request.method == "POST":
         request_data = request.get_json()
 
@@ -102,19 +103,18 @@ def add():
 
         text_data = None
         link_data = None
-        if 'text' in request_data:
-            text_data = request_data['text']
-        if 'link' in request_data:
-            link_data = request_data['link']
 
-        if data_entry_method == 'text':
+        if 'Text' in request_data:
+            text_data = request_data['Text']
+        if 'Link' in request_data:
+            link_data = request_data['Link']
+
+        if data_entry_method == 'Text':
            print(text_data)
            print(article_category)
         else:
             print(link_data)
             print(article_category)
-
-    return "Added Successfully to the database"
 
 def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_learning_method):
 
@@ -234,4 +234,4 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
     return category
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="localhost", port=5050, debug=True)
