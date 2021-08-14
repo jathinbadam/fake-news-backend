@@ -34,7 +34,6 @@ def documentvec(word2vec_model,summarywords):
 @app.route('/predict/', methods=['GET','POST'])
 def predict():
 
-
     if request.method == "POST":
         request_data = request.get_json()
 
@@ -42,7 +41,6 @@ def predict():
         machine_learning_method = request_data['machineLearning']
         data_entry_method = request_data['dataEntry']
   
-
         text_data = None
         link_data = None
 
@@ -117,6 +115,7 @@ def add():
 
 def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_learning_method):
 
+    print(test_summary)
     category = {}
     if feature_extraction_method == "Word2Vec":
 
@@ -141,6 +140,7 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
         test_vector = documentvec(model,test_summary_words)
         vector_pca_list = []
         vector_pca_list.append(test_vector)
+        print(test_vector)
         pca_reload = pk.load(open("./Models/pca.pkl",'rb'))
         result_new = pca_reload.transform(vector_pca_list)
         category[4] = result_new[0][0]
@@ -233,4 +233,4 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
     return category
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="localhost", port=5050, debug=True)
