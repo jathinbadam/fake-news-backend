@@ -139,7 +139,7 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
         model.train(test_corpus, total_examples=2, epochs = 1)
         test_vector = documentvec(model,test_summary_words)
         vector_pca_list = []
-        vector_pca_list.append(false_vector_floats)
+        vector_pca_list.append(test_vector)
         print(test_vector)
         pca_reload = pk.load(open("./Models/pca.pkl",'rb'))
         result_new = pca_reload.transform(vector_pca_list)
