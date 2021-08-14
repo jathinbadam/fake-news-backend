@@ -2,12 +2,11 @@ import pandas as pd
 from flask import Flask, render_template, request, jsonify
 from gensim.models import Word2Vec
 import matplotlib.pyplot as plt
-from mlxtend.plotting import plot_confusion_matrix
-import matplotlib.pyplot as plt
 import csv
 import joblib
 from scipy.spatial import distance
 from flask_cors import CORS, cross_origin
+import nltk
 from newspaper import Article
 import numpy as np
 import pickle as pk
@@ -73,6 +72,7 @@ def predict():
                 return "Please Enter valid values"
 
         else :
+            nltk.download('punkt')
             url = link_data
             article = Article(url)
             article.download()
