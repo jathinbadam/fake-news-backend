@@ -44,12 +44,13 @@ def predict():
         feature_extraction_method = request_data['featureExtraction']
         machine_learning_method = request_data['machineLearning']
         data_entry_method = request_data['dataEntry']
-        sample_data_entry_method = request_data['sampleDataEntry']
+  
 
         text_data = None
         link_data = None
 
         if data_entry_method == 'sample':
+            sample_data_entry_method = request_data['sampleDataEntry']
             if sample_data_entry_method == 'sampleLink':
                 data_entry_method == 'link'
                 link_data = request_data['sampleDataTypeLink']
@@ -121,8 +122,8 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
     category = {}
     if feature_extraction_method == "Word2Vec":
 
-        model = Word2Vec.load("word2vec.model")
-        with open('Final_Vectors.csv', newline='') as f:
+        model = Word2Vec.load("./Models/word2vec.model")
+        with open('./DataFiles/Final_Vectors.csv', newline='') as f:
             reader = csv.reader(f)
             True_vector = next(reader)  # gets the first line
             False_vector = next(reader)
@@ -142,7 +143,7 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
         test_vector = documentvec(model,test_summary_words)
         vector_pca_list = []
         vector_pca_list.append(test_vector)
-        pca_reload = pk.load(open("pca.pkl",'rb'))
+        pca_reload = pk.load(open("./Models/pca.pkl",'rb'))
         result_new = pca_reload.transform(vector_pca_list)
         category[4] = result_new[0][0]
         category[5] = result_new[0][1]
@@ -165,7 +166,7 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
             corpusLR = []
             corpusLR.append(test_vector)
 
-            file = open("LR_W2V.pkl","rb")
+            file = open("./Models/LR_W2V.pkl","rb")
             trained_model = joblib.load(file)
             category[0] = trained_model.predict(corpusLR)[0]
 
@@ -176,7 +177,7 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
             corpusRF = []
             corpusRF.append(test_vector)
 
-            file = open("RFC_W2V.pkl","rb")
+            file = open("./Models/RFC_W2V.pkl","rb")
             trained_model = joblib.load(file)
             category[0] = trained_model.predict(corpusRF)[0]
 
@@ -185,7 +186,7 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
             corpusGB = []
             corpusGB.append(test_vector)
 
-            file = open("GBC_W2V.pkl","rb")
+            file = open("./Models/GBC_W2V.pkl","rb")
             trained_model = joblib.load(file)
             category[0] = trained_model.predict(corpusGB)[0]
 
@@ -195,39 +196,39 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
             corpusDT = []
             corpusDT.append(test_vector)
 
-            file = open("DT_W2V.pkl","rb")
+            file = open("./Models/DT_W2V.pkl","rb")
             trained_model = joblib.load(file)
             category[0] = trained_model.predict(corpusDT)[0]
 
     else:
 
 
-        file = open("vectorizer.pkl","rb")
+        file = open("./Models/vectorizer.pkl","rb")
         vectorizer = joblib.load(file)
         input=[test_summary]
         test_vector = vectorizer.transform(input)
 
         if machine_learning_method == "Logistic Regression":
 
-            file = open("LR_TFIDF.pkl","rb")
+            file = open("./Models/LR_TFIDF.pkl","rb")
             trained_model = joblib.load(file)
             category[0]= float(trained_model.predict(test_vector)[0])
 
         if machine_learning_method == "Random Forest":
 
-            file = open("RFC_TFIDF.pkl","rb")
+            file = open("./Models/RFC_TFIDF.pkl","rb")
             trained_model = joblib.load(file)
             category[0] = float(trained_model.predict(test_vector)[0])
 
         if machine_learning_method == "Gradient Boosting":
 
-            file = open("GBC_TFIDF.pkl","rb")
+            file = open("./Models/GBC_TFIDF.pkl","rb")
             trained_model = joblib.load(file)
             category[0] = float(trained_model.predict(test_vector)[0])
 
         else:
 
-            file = open("DT_TFIDF.pkl","rb")
+            file = open("./Models/DT_TFIDF.pkl","rb")
             trained_model = joblib.load(file)
             category[0] = float(trained_model.predict(test_vector)[0])
 
