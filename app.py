@@ -234,4 +234,4 @@ def preprocessDataAndPredict(test_summary, feature_extraction_method, machine_le
     return category
 
 if __name__ == '__main__':
-    app.run(host="localhost", port=5050, debug=True)
+    app.run()
