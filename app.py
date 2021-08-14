@@ -65,7 +65,7 @@ def predict():
         if data_entry_method == 'text':
             test_summary = text_data
             try:
-                prediction = preprocessDataAndPredict(test_summary)
+                prediction = preprocessDataAndPredict(test_summary, feature_extraction_method, machine_learning_method)
                 response = jsonify(prediction)
                 response.headers.add("Access-Control-Allow-Origin", "*")
                 return response
