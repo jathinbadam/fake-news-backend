@@ -21,7 +21,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 @cross_origin(supports_credentials=True)
-
 def home():
     return render_template('home.html')
 
