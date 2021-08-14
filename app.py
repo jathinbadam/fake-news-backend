@@ -8,7 +8,6 @@ import csv
 import joblib
 from scipy.spatial import distance
 from flask_cors import CORS, cross_origin
-import nltk
 from newspaper import Article
 import numpy as np
 import pickle as pk
